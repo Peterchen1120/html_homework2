@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Practice</title>
+    <style>
+        :root {
+            --page-bg: #f4f4f4;
+            --panel-bg: #ffffff;
+            --top-fill: #aed6e8;
+            --top-border: #ff5a3d;
+            --middle-fill: #ffef00;
+            --middle-border: #1e90ff;
+            --bottom-fill: #43bc7a;
+            --dot-color: #8f8f8f;
+            --note-color: #ff2b2b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 30px;
+            background: var(--page-bg);
+            color: #111;
+            font-family: "Microsoft JhengHei", "Meiryo", "MS PGothic", sans-serif;       
+        }
+
+        div {
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            /* 調整作業表格的基礎寬度 */
+            min-width: 200px;
+        }
+
+        th, td {
+            padding: 10px; /* 稍微加大 padding 讓外觀更接近圖示 */
+            border: 1px solid black;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* --- 新增：作業要求的表格樣式 --- */
+        .assignment-table th {
+            background-color: #707070;
+            color: white;
+        }
+        .yellow-bg {
+            background-color: #FFFF00;
+        }
+        .white-bg {
+            background-color: #FFFFFF;
+        }
+
+        /* --- 新增：固定位置的 Div 樣式 --- */
+        .fixed-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 150px;
+            height: 120px;
+            border: 3px solid #76b900;
+            padding: 10px;
+            background-color: white;
+            font-size: 14px;
+            z-index: 1000; /* 確保它在最上層 */
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 原有的樣式保持不變 */
+        .c1 { color: blue; }
+        .c2 { color: red; }
+        .font_box { width: 100ch; }
+        iframe {
+            display: block;
+            width: 500px;
+            height: 500px;
+            border: none;
+            margin-top: 10px;
+        }
+        .assignment {
+            margin-top: 56px;
+            padding-top: 28px;
+            border-top: 3px solid #d0d0d0;
+        }
+        .card {
+            width: min(900px, 100%);
+            margin: 0;
+            background: var(--panel-bg);
+            padding: 32px 16px 28px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+        }
+        .sample {
+            margin: 0 0 34px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(36px, 4vw, 58px);
+            font-weight: 700;
+            line-height: 1.1;
+            color: #000;
+        }
+        .top {
+            padding: 12px 14px;
+            background: var(--top-fill);
+            border: 5px solid var(--top-border);
+            outline: 5px solid var(--top-border);
+            outline-offset: 8px;
+        }
+        .middle {
+            padding: 8px 12px;
+            background: var(--middle-fill);
+            border: 4px solid var(--middle-border);
+            border-radius: 18px;
+        }
+        .bottom {
+            padding: 16px 14px;
+            background: var(--bottom-fill);
+            border: 10px dotted var(--dot-color);
+        }
+        .exercise18-card {
+            width: min(920px, 100%);
+            margin: 0 0 36px;
+            padding: 34px 42px 28px;
+            background: #fff;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+        }
+        .exercise18-h1 {
+            margin: 0 0 62px;
+            width: fit-content;
+            padding: 0 6px 6px;
+            border-top: 8px solid #000;
+            text-shadow: 4px 4px 0 rgba(255, 182, 193, 0.85);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(42px, 4.8vw, 82px);
+        }
+        .exercise18-h2 {
+            margin: 0 0 56px;
+            padding: 6px 16px 8px;
+            border: 5px solid #d4d400;
+            outline: 2px solid #555;
+            background: #fff;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(32px, 4vw, 64px);
+            font-style: italic;
+        }
+        .exercise18-h3 {
+            margin: 6px 0 0;
+            text-align: right;
+            color: #1a2e67;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(24px, 2.6vw, 42px);
+            font-weight: 700;
+        }
+        .exercise18-h3 span {
+            display: inline-block;
+            padding-bottom: 1px;
+            border-bottom: 3px solid #111;
+        }
+
+        @media (max-width: 768px) {
+            body { margin: 16px; }
+            iframe { width: 100%; height: 360px; }
+            .card { padding: 22px 10px 20px; }
+            .exercise18-card { padding: 18px 18px 16px; }
+            .exercise18-h3 { text-align: left; }
+            /* 行動版調整固定盒子的位置，避免擋住內容 */
+            .fixed-box { width: 120px; height: 100px; font-size: 12px; }
+        }
+        .poem-container {
+        width: 100%;
+        max-width: 800px;
+        line-height: 1.6;
+        padding: 20px;
+        background: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        overflow: hidden; /* 清除浮動影響 */
+        }
+
+        /* 右側浮動框 */
+        .float-scroll-box {
+            float: right;
+            width: 150px;
+            height: 150px;
+            border: 4px solid #76b900; /* 綠色粗框 */
+            margin-left: 20px;
+            padding: 10px;
+            overflow: auto; /* 重點：自動顯示捲軸 */
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+
+        /* inline-block 方塊 (Love 的黃色底) */
+        .love-box {
+            display: inline-block;
+            background-color: yellow;
+            border: 1px solid blue;
+            padding: 0 5px;
+            margin: 0 2px;
+            line-height: 1.2;
+            font-weight: bold;
+        }
+/* =========================
+   Week 10 - 指定按鈕與圖片資訊區
+   所有 class 使用 wk10- 前綴，避免和前面作業重複
+   ========================= */
+
+.wk10-section {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 3px solid #d0d0d0;
+}
+
+/* 抵消你原本全域 div { margin-bottom: 20px; } 的影響 */
+.wk10-section div,
+.wk10-demo div {
+    margin-bottom: 0;
+}
+
+.wk10-demo {
+    width: 760px;
+    max-width: 100%;
+    margin: 0 0 36px;
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    font-family: Roboto, Arial, "Microsoft JhengHei", sans-serif;
+    font-size: 13px;
+    color: #2f2f2f;
+}
+
+/* 上方灰色列 */
+.wk10-header {
+    height: 35px;
+    padding: 0 18px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eaeaea;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wk10-title {
+    color: #707070;
+    font-weight: normal;
+}
+
+/* 題目指定按鈕：
+   height: 22px;
+   radius: 8px;
+   background: #ffffff;
+   outline/border: 1px #2f2f2f;
+   font-size: 13px;
+*/
+.wk10-info-btn {
+    height: 22px;
+    min-width: 78px;
+    padding: 0 12px;
+
+    background: #ffffff;
+    border: 1px solid #2f2f2f;
+    border-radius: 8px;
+
+    color: #2f2f2f;
+    font-family: Roboto, Arial, "Microsoft JhengHei", sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+
+    cursor: pointer;
+}
+
+/* 滑過按鈕 */
+.wk10-info-btn:hover {
+    background: #f3f3f3;
+}
+
+/* 按下按鈕 */
+.wk10-info-btn:active {
+    background: #e6e6e6;
+}
+
+/* 鍵盤 Tab 選到按鈕時 */
+.wk10-info-btn:focus {
+    outline: 2px solid #8ab4f8;
+    outline-offset: 2px;
+}
+
+/* 內容區：對應圖上左右 20 / 26 類似的留白 */
+.wk10-content {
+    padding: 20px 26px 26px 20px;
+}
+
+/* 圖片外框：
+   題目圖上標 496px
+   圖片本身是 450x240
+*/
+.wk10-preview-frame {
+    width: 496px;
+    max-width: 100%;
+    min-height: 240px;
+
+    margin: 0 auto;
+    background: #ffe5bf;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wk10-preview-img {
+    width: 450px;
+    max-width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+}
+
+/* 詳細資訊外層：
+   總寬度 496px
+   距離圖片下方 10px
+*/
+/* 詳細資訊外層 */
+.wk10-detail-wrap {
+    width: 496px;
+    max-width: 100%;
+
+    margin: 10px auto 0;
+    padding: 0 0 10px;
+
+    background: #ffffff;
+    display: none;
+}
+
+.wk10-detail-wrap.wk10-is-visible {
+    display: block;
+}
+
+/* 綠色資訊區：用 flex column + gap 做出每列中間的白色間隔 */
+.wk10-detail-panel {
+    background: #ffffff;
+    color: #707070;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    font-family: Roboto, Arial, "Microsoft JhengHei", sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* 每一條綠色資訊列 */
+.wk10-detail-row {
+    min-height: 18px;
+    padding: 0 10px;
+
+    background: #8df38f;
+    color: #707070;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: none;
+    word-break: break-all;
+
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* 路徑那列比較長，允許換行，所以會自然變高 */
+.wk10-detail-row:last-child {
+    min-height: 36px;
+    align-items: flex-start;
+    padding-top: 2px;
+}
+/* 小螢幕時避免超出畫面 */
+@media (max-width: 768px) {
+    .wk10-demo {
+        width: 100%;
+    }
+
+    .wk10-header {
+        padding: 0 12px;
+    }
+
+    .wk10-content {
+        padding: 16px 12px 20px;
+    }
+
+    .wk10-preview-frame,
+    .wk10-detail-wrap {
+        width: 100%;
+    }
+
+    .wk10-preview-img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 450 / 240;
+    }
+}
+    </style>
+</head>
+<body>
+    <h3>week10</h3>
+
+<div class="wk10-section">
+    <div class="wk10-demo">
+        <div class="wk10-header">
+            <div class="wk10-title">預覽</div>
+            <button id="wk10InfoBtn" class="wk10-info-btn" type="button">查看資訊</button>
+        </div>
+
+        <div class="wk10-content">
+            <div class="wk10-preview-frame">
+                <img
+                    class="wk10-preview-img"
+                    src="https://picsum.photos/450/240?random=10"
+                    alt="Preview image">
+            </div>
+
+            <div id="wk10DetailPanel" class="wk10-detail-wrap">
+                <div class="wk10-detail-panel">
+                    <div class="wk10-detail-row">拍攝日期：2017/10/12</div>
+                    <div class="wk10-detail-row">檔名：20171012_1.jpg</div>
+                    <div class="wk10-detail-row">大小：496.97KB</div>
+                    <div class="wk10-detail-row">路徑：\\designcenter-qnap.com.tw\DesignCenter\PM\RD\Image\sample</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="fixed-box">
+        This div element has position: fixed;
+    </div>
+
+    <h3>week7</h3>
+    <div>
+        <div class="exercise18-card">
+            <table class="assignment-table">
+                <thead>
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="yellow-bg">
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="white-bg">
+                        <td>2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="yellow-bg">
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>我相信題目是要我這樣固定綠色框框的 : D</p>
+        <div class="poem-container">
+            <div class="float-scroll-box">
+                A float div with overflow auto. A float div with overflow auto. A float div with overflow auto.
+            </div>
+            <pre>
+<h4>ベテルギウス 參宿四(複歌)
+by 優里</h4> 
+僕ら見つけあって　手繰りあって　同じ空
+boku ra mitsuke atte     taguri atte     onaji sora
+我們互相發現彼此　互相牽引　在同片天空底下
+
+輝くのだって　二人だって　約束した
+kagayaku no datte     futari datte     yakusoku shi ta
+我們兩個人　曾經約定　要閃閃發光
+
+遥か遠く終わらないべテルギウス
+haruka tooku owarana i <span class="love-box">beterugiusu</span>
+在遙遠的遠方永不停止閃耀的<span class="love-box">參宿四</span>
+
+誰かに繋ぐ魔法
+dare ka ni tsunagu mahou
+有著連繫某人的魔法
+
+
+僕ら　肩並べ　手取り合って　進んでく
+boku ra     kata narabe     tetori atte     susunde ku
+我們　肩並肩　牽起彼此的手　前進著
+
+辛い時だって　泣かないって　誓っただろう
+tsurai toki datte     nakanaitte     chikatta da ro u
+無論是多麼難受的時刻　也發誓過　不會哭泣了對吧
+
+遥か遠く終わらないべテルギウス
+haruka tooku owarana i <span class="love-box">beterugiusu</span>
+在遙遠的遠方永不停止閃耀的<span class="love-box">參宿四</span>
+
+君にも見えるだろう　祈りが
+kimi ni mo mie ru da ro u   inori ga
+你也看的到吧　我的祈禱
+
+            </pre>
+        </div>
+        <p>題目上說just long sentence，那我放歌詞可以吧 : D</p>
+    </div>
+
+
+
+    <h3>week5</h3>
+    <div>
+        <div class="exercise18-card">
+            <h1 class="exercise18-h1">This is heading 1</h1>
+            <h2 class="exercise18-h2">This is heading 2</h2>
+            <h3 class="exercise18-h3"><span>This is heading 3</span></h3>
+        </div>
+    </div>
+
+    <div>
+        <div class="card">
+                <h1 class="sample top">Hello World</h1>
+                <h1 class="sample middle">Hello World</h1>
+                <h1 class="sample bottom">Hello World</h1>
+        </div>
+    </div>
+
+    <div>
+        <h3>week4</h3>
+        <p>code example</p>
+        <pre><code>
+var person = {
+    firstName = "Chen",
+    lastName = "Zheng Wei",
+    studentId = "113403545"
+}
+</code></pre>
+        <form id="text_form">
+            <p>First Name</p>
+            <input type="text" name="fname" value="Zheng Wei">
+            <p>Last Name</p>
+            <input type="text" name="lname" value="Chen">
+            <p>Student Id</p>
+            <input type="text" name="id" value="113403545"><br><br>
+            <input type="submit">
+            <input type="reset">
+        </form>
+        <br>
+        <svg width="600" height="400">
+            <rect x="50" y="50" width="250" height="250"
+                style="fill:blue; stroke:black; stroke-width:8;" />
+            <circle cx="300" cy="175" r="110"
+                style="fill:yellow; stroke:red; stroke-width:8;" />
+        </svg>
+    </div>
+
+    <div>
+        <h3>week3</h3>
+        <iframe src="https://ncueeclass.ncu.edu.tw/" title="NCU eclass"></iframe>
+    </div>
+
+    <div>
+        <h3>week2</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Student Id</th>
+            </tr>
+            <tr>
+                <td>Chen Zheng Wei</td>
+                <td>113403545</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        const wk10InfoBtn = document.querySelector('#wk10InfoBtn');
+        const wk10DetailPanel = document.querySelector('#wk10DetailPanel');
+
+        wk10InfoBtn.addEventListener('click', function () {
+            wk10DetailPanel.classList.toggle('wk10-is-visible');
+
+            if (wk10DetailPanel.classList.contains('wk10-is-visible')) {
+                wk10InfoBtn.textContent = '收起資訊';
+            } else {
+                wk10InfoBtn.textContent = '查看資訊';
+            }
+        });
+    </script>
+</body>
+</html>
