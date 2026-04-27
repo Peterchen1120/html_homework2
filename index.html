@@ -4,44 +4,49 @@
     <meta charset="UTF-8">
     <title>CSS Image Styling Practice</title>
     <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
        .container {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* 置中 */
-    align-items: center;    /* 垂直置中 */
-    gap: 0;                 /* 關鍵 1：先把間距歸零，讓大家貼在一起 */
-}
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            /* 關鍵修正：從 center 改成 flex-start，讓所有圖片頂端對齊 */
+            align-items: flex-start;    
+            gap: 0;
+        }
 
-/* 左圖 */
-.img-left {
-    width: 33%;
-    height: 300px;
-    border-radius: 18px;
-    object-fit: cover;
-    /* 這裡不用動 */
-}
+        /* 中間圓圖 */
+        .img-center {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            object-fit: cover;
+            
+            /* 確保 margin 歸零，它就會自然貼齊上方邊界 */
+            margin: 0; 
+        }
 
-/* 中間圓圖 */
-.img-center {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 1px solid #000;
-    object-fit: cover;
-    
-    /* 關鍵 2：移除之前的負邊距，改為 0 或小正數 */
-    margin-left: 0; 
-    margin-right: 0;
-    
-    /* 如果你覺得貼太死，可以加一點點間距，例如 2px */
-    /* margin: 0 2px; */
-}
+        /* 左圖 */
+        .img-left {
+            width: 33%;
+            height: 300px;
+            border-radius: 18px;
+            object-fit: cover;
+            /* 這裡不用動 */
+        }
 
-/* 右圖 */
-.img-right {
-    width: 33%;
-    height: 300px;
-}
+        /* 右圖 */
+        .img-right {
+            width: 33%;
+            height: 300px;
+        }
     </style>
 </head>
 <body>
