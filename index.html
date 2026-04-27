@@ -4,45 +4,44 @@
     <meta charset="UTF-8">
     <title>CSS Image Styling Practice</title>
     <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+       .container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* 置中 */
+    align-items: center;    /* 垂直置中 */
+    gap: 0;                 /* 關鍵 1：先把間距歸零，讓大家貼在一起 */
+}
 
-        .container {
-            width: 90%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* 左圖 */
+.img-left {
+    width: 33%;
+    height: 300px;
+    border-radius: 18px;
+    object-fit: cover;
+    /* 這裡不用動 */
+}
 
-        /* Left Image: 33% width, 18px radius, no distortion */
-        .img-left {
-            width: 33%;
-            height: 300px; /* Fixed height to match the right side */
-            border-radius: 18px;
-            object-fit: cover; /* This prevents the distortion */
-        }
+/* 中間圓圖 */
+.img-center {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    object-fit: cover;
+    
+    /* 關鍵 2：移除之前的負邊距，改為 0 或小正數 */
+    margin-left: 0; 
+    margin-right: 0;
+    
+    /* 如果你覺得貼太死，可以加一點點間距，例如 2px */
+    /* margin: 0 2px; */
+}
 
-        /* Center Image: 150px circle, no distortion */
-        .img-center {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%; /* Makes it a circle */
-            border: 1px solid #000; /* As indicated by the 'border' note */
-            object-fit: cover; /* This prevents the distortion */
-        }
-
-        /* Right Image: 33% width, 300px height, distorted */
-        .img-right {
-            width: 33%;
-            height: 300px;
-            /* By NOT using object-fit, the image will stretch to fill these dimensions */
-        }
+/* 右圖 */
+.img-right {
+    width: 33%;
+    height: 300px;
+}
     </style>
 </head>
 <body>
